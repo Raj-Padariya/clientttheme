@@ -1,0 +1,414 @@
+/*
+ * Orbit motion + surface layer. Theme-owned (imported from tokens.css) so the shared app/globals.css stays
+ * identical across portals. Everything reads tokens; every animation is switched off under reduced motion.
+ */
+
+@theme {
+  --animate-orbit-spin: orbit-spin 40s linear infinite;
+  --animate-orbit-spin-fast: orbit-spin 14s linear infinite;
+  --animate-orbit-spin-rev: orbit-spin 60s linear infinite reverse;
+  --animate-twinkle: twinkle 4s ease-in-out infinite;
+  --animate-orbit-bob: orbit-bob 6s ease-in-out infinite;
+  --animate-comet: comet 3.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  --animate-pulse-ring: pulse-ring 2.4s ease-out infinite;
+  --animate-arc-run: arc-run 2.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  --animate-line-draw: line-draw 5s linear infinite;
+  --animate-fill-breathe: fill-breathe 5s linear infinite;
+  --animate-eq-bar: eq-bar 1.4s ease-in-out infinite;
+  /* Leaderboard: satellites ride a ring while their content counter-spins at the same speed to stay upright. */
+  --animate-ring-ride: orbit-spin 32s linear infinite;
+  --animate-ring-ride-counter: orbit-spin 32s linear infinite reverse;
+  --animate-ring-ride-slow: orbit-spin 54s linear infinite reverse;
+  --animate-ring-ride-slow-counter: orbit-spin 54s linear infinite;
+  --animate-confetti: confetti-fall 5.5s cubic-bezier(0.3, 0.6, 0.4, 1) infinite;
+  --animate-lane-dash: lane-dash 0.8s linear infinite;
+  --animate-rank-pop: rank-pop 0.7s cubic-bezier(0.2, 1.4, 0.4, 1) both;
+  /* App popup: springs in from the right, then a cursor taps Install on a loop (press + ripple share its timing). */
+  --animate-popup-in: popup-in 0.8s cubic-bezier(0.2, 0.9, 0.3, 1.15) both;
+  --animate-popup-cursor: popup-cursor 2.8s ease-in-out 1s infinite both;
+  --animate-popup-press: popup-press 2.8s ease-in-out 1s infinite;
+  --animate-popup-ripple: popup-ripple 2.8s ease-out 1s infinite both;
+  /* Dedicated speeds (not duration overrides, which the animation shorthand can beat in the cascade). */
+  --animate-popup-comet: orbit-spin 2.6s linear infinite;
+  --animate-popup-bob: popup-bob 3.2s ease-in-out infinite;
+  --animate-popup-wiggle: popup-wiggle 2.8s ease-in-out infinite;
+  --animate-popup-shine: popup-shine 2.8s ease-in-out infinite;
+  --animate-popup-glow: popup-glow 2.4s ease-in-out infinite;
+  --animate-popup-spark: popup-spark 2.2s ease-in-out infinite both;
+
+  @keyframes popup-bob {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-7px);
+    }
+  }
+
+  @keyframes popup-wiggle {
+    0%,
+    30%,
+    100% {
+      transform: rotate(0deg) scale(1);
+    }
+    6% {
+      transform: rotate(-14deg) scale(1.08);
+    }
+    12% {
+      transform: rotate(12deg) scale(1.08);
+    }
+    18% {
+      transform: rotate(-8deg) scale(1.04);
+    }
+    24% {
+      transform: rotate(5deg) scale(1);
+    }
+  }
+
+  @keyframes popup-shine {
+    0% {
+      transform: translateX(-160%) skewX(-18deg);
+    }
+    55%,
+    100% {
+      transform: translateX(420%) skewX(-18deg);
+    }
+  }
+
+  @keyframes popup-glow {
+    0%,
+    100% {
+      opacity: 0.35;
+      transform: scale(0.96);
+    }
+    50% {
+      opacity: 0.85;
+      transform: scale(1.03);
+    }
+  }
+
+  @keyframes popup-spark {
+    0%,
+    100% {
+      opacity: 0;
+      transform: scale(0.3) rotate(0deg);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1) rotate(90deg);
+    }
+  }
+
+  @keyframes popup-in {
+    0% {
+      opacity: 0;
+      transform: translateX(110%) scale(0.92);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+    }
+  }
+
+  @keyframes popup-cursor {
+    0%,
+    10% {
+      opacity: 0;
+      transform: translate(46px, 34px);
+    }
+    38% {
+      opacity: 1;
+      transform: translate(0, 0) scale(1);
+    }
+    46% {
+      transform: translate(0, 0) scale(0.82);
+    }
+    54% {
+      opacity: 1;
+      transform: translate(0, 0) scale(1);
+    }
+    80%,
+    100% {
+      opacity: 0;
+      transform: translate(10px, 8px);
+    }
+  }
+
+  @keyframes popup-press {
+    0%,
+    40%,
+    56%,
+    100% {
+      transform: scale(1);
+    }
+    47% {
+      transform: scale(0.965);
+    }
+  }
+
+  @keyframes popup-ripple {
+    0%,
+    44% {
+      opacity: 0;
+      transform: scale(0.2);
+    }
+    48% {
+      opacity: 0.55;
+    }
+    80%,
+    100% {
+      opacity: 0;
+      transform: scale(2.6);
+    }
+  }
+
+  /* Path with pathLength="100" + dasharray 100: draws itself, holds, then fades for the next loop. */
+  @keyframes line-draw {
+    0% {
+      stroke-dashoffset: 100;
+      opacity: 1;
+    }
+    55%,
+    88% {
+      stroke-dashoffset: 0;
+      opacity: 1;
+    }
+    100% {
+      stroke-dashoffset: 0;
+      opacity: 0;
+    }
+  }
+
+  /* Area under the line, timed to line-draw so it fills in as the stroke completes. */
+  @keyframes fill-breathe {
+    0%,
+    20% {
+      opacity: 0;
+    }
+    55%,
+    88% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+  /* Equaliser bar; pair with origin-bottom and a per-bar animation-delay. */
+  @keyframes eq-bar {
+    0%,
+    100% {
+      transform: scaleY(1);
+    }
+    50% {
+      transform: scaleY(0.4);
+    }
+  }
+
+  /* A short dash (pathLength="100", dasharray "14 186") running the full length of an SVG path. */
+  @keyframes arc-run {
+    from {
+      stroke-dashoffset: 14;
+    }
+    to {
+      stroke-dashoffset: -100;
+    }
+  }
+
+  @keyframes orbit-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes twinkle {
+    0%,
+    100% {
+      opacity: 0.35;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes grow-y {
+    from {
+      transform: scaleY(0);
+    }
+    to {
+      transform: scaleY(1);
+    }
+  }
+
+  @keyframes orbit-bob {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0);
+    }
+    50% {
+      transform: translate3d(0, -6px, 0);
+    }
+  }
+
+  /* A light streak sliding along a track; pair with overflow-hidden on the track. */
+  @keyframes comet {
+    from {
+      transform: translateX(-120%);
+    }
+    to {
+      transform: translateX(320%);
+    }
+  }
+
+  @keyframes pulse-ring {
+    from {
+      transform: scale(0.85);
+      opacity: 0.7;
+    }
+    to {
+      transform: scale(1.9);
+      opacity: 0;
+    }
+  }
+
+  /* Falls from the top of its container; set --confetti-x (drift) and --confetti-spin per piece. */
+  @keyframes confetti-fall {
+    0% {
+      transform: translate3d(0, -12px, 0) rotate(0deg);
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+    }
+    100% {
+      transform: translate3d(var(--confetti-x, 0px), 360px, 0) rotate(var(--confetti-spin, 540deg));
+      opacity: 0;
+    }
+  }
+
+  /* Lane markings scrolling backwards so the track reads as moving; the period matches a 24px dash pattern. */
+  @keyframes lane-dash {
+    to {
+      background-position: -24px 0;
+    }
+  }
+
+  @keyframes rank-pop {
+    0% {
+      transform: scale(0.4);
+      opacity: 0;
+    }
+    70% {
+      transform: scale(1.12);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+}
+
+/*
+ * App backdrop: two drifting nebulae over a field of pin-point stars. Fixed and behind everything, so
+ * translucent cards (--glass-bg) pick up depth. Light mode swaps stars for a faint dot grid.
+ */
+@utility orbit-space {
+  background-color: var(--bg-app);
+  background-image:
+    radial-gradient(900px 600px at 8% -10%, color-mix(in oklab, var(--brand-primary) 14%, transparent), transparent 70%),
+    radial-gradient(800px 560px at 100% 110%, color-mix(in oklab, var(--orbit-violet) 16%, transparent), transparent 70%),
+    radial-gradient(1px 1px at 12% 22%, rgb(255 255 255 / 0.7), transparent 60%),
+    radial-gradient(1px 1px at 68% 14%, rgb(255 255 255 / 0.55), transparent 60%),
+    radial-gradient(1.5px 1.5px at 84% 46%, rgb(196 246 255 / 0.7), transparent 60%),
+    radial-gradient(1px 1px at 32% 72%, rgb(255 255 255 / 0.5), transparent 60%),
+    radial-gradient(1.5px 1.5px at 52% 38%, rgb(196 181 253 / 0.6), transparent 60%),
+    radial-gradient(1px 1px at 90% 82%, rgb(255 255 255 / 0.5), transparent 60%),
+    radial-gradient(1px 1px at 22% 92%, rgb(255 255 255 / 0.45), transparent 60%);
+  background-attachment: fixed;
+  background-size:
+    auto,
+    auto,
+    420px 420px,
+    420px 420px,
+    420px 420px,
+    420px 420px,
+    420px 420px,
+    420px 420px,
+    420px 420px;
+
+  [data-theme="light"] & {
+    background-image:
+      radial-gradient(900px 600px at 8% -10%, color-mix(in oklab, var(--brand-primary) 10%, transparent), transparent 70%),
+      radial-gradient(800px 560px at 100% 110%, color-mix(in oklab, var(--orbit-violet) 9%, transparent), transparent 70%),
+      radial-gradient(var(--glass-grid) 1px, transparent 1px);
+    background-size:
+      auto,
+      auto,
+      22px 22px;
+  }
+}
+
+/*
+ * 3D tilt: the element follows --rx / --ry (set on pointer move by useTilt) inside its own perspective.
+ * Children with `orbit-pop` float above the surface for parallax.
+ */
+@utility orbit-tilt {
+  transform: perspective(var(--orbit-perspective)) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transform-style: preserve-3d;
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  @media (prefers-reduced-motion: reduce) {
+    transform: none;
+    transition: none;
+  }
+}
+
+@utility orbit-pop {
+  transform: translateZ(28px);
+}
+
+/* Card skin: translucent navy with a cyan→violet hairline drawn by a masked gradient border. */
+@utility orbit-card {
+  position: relative;
+  isolation: isolate;
+  background: var(--glass-bg);
+  border-radius: var(--r-xl);
+  box-shadow: var(--glass-highlight), var(--glass-shadow);
+  backdrop-filter: blur(14px) saturate(1.2);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    padding: 1px;
+    border-radius: inherit;
+    background: var(--glass-edge);
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+}
+
+/* Elliptical orbit track for decorative rings (size it with w-/h-, spin it with animate-orbit-spin). */
+@utility orbit-ring {
+  border-radius: 9999px;
+  border: 1px dashed color-mix(in oklab, var(--brand-primary) 32%, transparent);
+}
+
+/* Cursor-following light inside a card; the element sets --mx / --my on pointer move. */
+@utility orbit-spot {
+  background: radial-gradient(280px circle at var(--mx, 50%) var(--my, 0%), color-mix(in oklab, var(--brand-primary) 18%, transparent), transparent 70%);
+}
+
+/* Cyan → violet text fill for hero numbers and headings. */
+@utility orbit-text {
+  background: linear-gradient(100deg, var(--brand-primary), var(--orbit-violet));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}

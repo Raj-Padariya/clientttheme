@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="45%" r="70%">
+      <stop offset="0" stop-color="#2e2a22"/>
+      <stop offset="0.6" stop-color="#17171a"/>
+      <stop offset="1" stop-color="#0b0b0c"/>
+    </radialGradient>
+    <linearGradient id="case" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f1d9a4"/>
+      <stop offset="0.5" stop-color="#b08a45"/>
+      <stop offset="1" stop-color="#5c4316"/>
+    </linearGradient>
+    <linearGradient id="strap" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2e2e33"/>
+      <stop offset="1" stop-color="#18181b"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="480" fill="url(#bg)"/>
+  <ellipse cx="320" cy="440" rx="150" ry="16" fill="#000" opacity="0.5"/>
+  <path d="M262 0 H378 L366 130 H274 Z" fill="url(#strap)"/>
+  <path d="M274 350 H366 L378 480 H262 Z" fill="url(#strap)"/>
+  <g stroke="#c9a45c" stroke-opacity="0.25">
+    <path d="M274 30 H366 M274 60 H366 M274 90 H366"/>
+    <path d="M274 390 H366 M274 420 H366 M274 450 H366"/>
+  </g>
+  <rect x="224" y="110" width="192" height="260" rx="52" fill="url(#case)"/>
+  <rect x="234" y="120" width="172" height="240" rx="44" fill="#0b0b0c"/>
+  <rect x="420" y="190" width="14" height="40" rx="6" fill="url(#case)"/>
+  <rect x="420" y="246" width="10" height="34" rx="4" fill="#7a5a20"/>
+  <circle cx="320" cy="226" r="62" fill="none" stroke="#2e2e33" stroke-width="10"/>
+  <circle cx="320" cy="226" r="62" fill="none" stroke="#c9a45c" stroke-width="10" stroke-linecap="round" stroke-dasharray="290 400" transform="rotate(-90 320 226)"/>
+  <circle cx="320" cy="226" r="44" fill="none" stroke="#3f3f46" stroke-width="8"/>
+  <circle cx="320" cy="226" r="44" fill="none" stroke="#e8cf9c" stroke-width="8" stroke-linecap="round" stroke-dasharray="160 300" transform="rotate(-90 320 226)"/>
+  <text x="320" y="236" text-anchor="middle" font-family="Arial, sans-serif" font-size="26" font-weight="600" fill="#f1d9a4">10:09</text>
+  <path d="M262 320 L284 320 L292 304 L304 336 L314 296 L324 330 L332 320 L378 320" fill="none" stroke="#c9a45c" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="130" cy="120" r="2" fill="#e8cf9c"/>
+  <circle cx="520" cy="100" r="2.4" fill="#e8cf9c" opacity="0.8"/>
+  <circle cx="500" cy="370" r="1.6" fill="#e8cf9c" opacity="0.6"/>
+</svg>

@@ -1,0 +1,187 @@
+/* Market Desk motion for the Bonuses page: candles print, price lines draw, tickers scroll, orders fill. */
+
+/* A candle prints: it grows up from its base. */
+.mkt-candle {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation: mkt-candle 0.55s cubic-bezier(0.2, 0.9, 0.3, 1.2) var(--candle-delay, 0s) both;
+}
+
+@keyframes mkt-candle {
+  from {
+    opacity: 0;
+    transform: scaleY(0);
+  }
+  to {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+
+/* The live candle keeps ticking up and down. */
+.mkt-live {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation: mkt-live 1.1s ease-in-out var(--live-delay, 0s) infinite alternate;
+}
+
+@keyframes mkt-live {
+  from {
+    transform: scaleY(0.7);
+  }
+  to {
+    transform: scaleY(1.08);
+  }
+}
+
+/* A price line draws itself left to right (path needs pathLength="1"). */
+.mkt-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: mkt-draw 1.8s ease-out var(--draw-delay, 0.3s) forwards;
+}
+
+@keyframes mkt-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Dashed order / limit lines march. */
+.mkt-march {
+  animation: mkt-march 0.8s linear infinite;
+}
+
+@keyframes mkt-march {
+  to {
+    stroke-dashoffset: -12;
+  }
+}
+
+/* Volume bars pump. */
+.mkt-vol {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation: mkt-vol 0.9s ease-in-out var(--vol-delay, 0s) infinite alternate;
+}
+
+@keyframes mkt-vol {
+  from {
+    transform: scaleY(0.35);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+/* The bonus block rises onto the deposit candle. */
+.mkt-rise {
+  transform-box: fill-box;
+  animation: mkt-rise 0.9s cubic-bezier(0.2, 0.9, 0.3, 1.25) var(--rise-delay, 0.4s) both;
+}
+
+@keyframes mkt-rise {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Ticker tape scrolls; the content is rendered twice so -50% loops seamlessly. */
+.mkt-tape {
+  animation: mkt-tape var(--tape-duration, 22s) linear infinite;
+}
+
+@keyframes mkt-tape {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* An order dot runs along a route. */
+.mkt-flow {
+  animation: mkt-flow 2.2s ease-in-out infinite;
+}
+
+@keyframes mkt-flow {
+  0% {
+    left: 0%;
+    opacity: 0;
+  }
+  15%,
+  85% {
+    opacity: 1;
+  }
+  100% {
+    left: 100%;
+    opacity: 0;
+  }
+}
+
+/* A screen glare sweeps across. */
+.mkt-sweep {
+  animation: mkt-sweep 4.5s ease-in-out infinite;
+}
+
+@keyframes mkt-sweep {
+  0% {
+    left: -40%;
+  }
+  60%,
+  100% {
+    left: 120%;
+  }
+}
+
+/* A pending limit line blinks. */
+.mkt-blink {
+  animation: mkt-blink 1.1s ease-in-out infinite;
+}
+
+@keyframes mkt-blink {
+  50% {
+    opacity: 0.2;
+  }
+}
+
+/* The history price line grows down from the top. */
+.mkt-grow-down {
+  transform-origin: top center;
+  animation: mkt-grow-down 1.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes mkt-grow-down {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mkt-flow,
+  .mkt-sweep {
+    display: none;
+  }
+
+  .mkt-draw {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+
+  .mkt-candle,
+  .mkt-live,
+  .mkt-march,
+  .mkt-vol,
+  .mkt-rise,
+  .mkt-tape,
+  .mkt-blink,
+  .mkt-grow-down {
+    animation: none;
+  }
+}

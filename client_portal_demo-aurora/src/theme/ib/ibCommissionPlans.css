@@ -1,0 +1,84 @@
+/* Aurora IB commission plans — "order book ladder": live plan tape, bid/ask depth rows, sub-IB volume histogram, order ticket. */
+
+@keyframes cpl-rise {
+  from { opacity: 0; transform: translateY(14px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+.cpl-rise { animation: cpl-rise 560ms cubic-bezier(0.2, 0.9, 0.3, 1.15) both; }
+
+@keyframes cpl-tape {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.cpl-tape { animation: cpl-tape 24s linear infinite; }
+
+/* A tick flash that ripples down the book, row by row (delay set inline). */
+@keyframes cpl-flash {
+  0%, 30%, 100% { background-color: transparent; }
+  8% { background-color: color-mix(in oklab, var(--brand-primary) 20%, transparent); }
+}
+.cpl-flash { animation: cpl-flash 2.8s ease-out infinite; }
+
+@keyframes cpl-halo {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+.cpl-halo { animation: cpl-halo 1.6s ease-out infinite; }
+
+@keyframes cpl-pulse {
+  0% { transform: scale(1); opacity: 0.7; }
+  100% { transform: scale(1.3); opacity: 0; }
+}
+.cpl-pulse { animation: cpl-pulse 1.8s ease-out infinite; }
+
+@keyframes cpl-volume {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(0.5); }
+}
+.cpl-volume { animation: cpl-volume 1.4s ease-in-out infinite; }
+
+@keyframes cpl-ghost {
+  0%, 100% { transform: scaleX(0.35); opacity: 0.5; }
+  50% { transform: scaleX(1); opacity: 1; }
+}
+.cpl-ghost { animation: cpl-ghost 2s ease-in-out infinite; }
+
+@keyframes cpl-sweep {
+  0% { transform: translateX(-140%) skewX(-18deg); }
+  55%, 100% { transform: translateX(420%) skewX(-18deg); }
+}
+.cpl-sweep { animation: cpl-sweep 2.6s ease-in-out infinite; }
+
+@keyframes cpl-caret {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.1; }
+}
+.cpl-caret { animation: cpl-caret 1s steps(1) infinite; }
+
+@keyframes cpl-stripes {
+  from { background-position: 0 0; }
+  to { background-position: 16px 0; }
+}
+.cpl-stripes {
+  background-image: linear-gradient(-45deg, currentColor 25%, transparent 25%, transparent 50%, currentColor 50%, currentColor 75%, transparent 75%);
+  background-size: 16px 16px;
+  animation: cpl-stripes 0.8s linear infinite;
+}
+
+/* Ten price ticks along a depth track. */
+.cpl-ticks {
+  background-image: repeating-linear-gradient(90deg, transparent 0 calc(10% - 1px), var(--border) calc(10% - 1px) 10%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cpl-rise,
+  .cpl-tape,
+  .cpl-flash,
+  .cpl-halo,
+  .cpl-pulse,
+  .cpl-volume,
+  .cpl-ghost,
+  .cpl-sweep,
+  .cpl-caret,
+  .cpl-stripes { animation: none; }
+}

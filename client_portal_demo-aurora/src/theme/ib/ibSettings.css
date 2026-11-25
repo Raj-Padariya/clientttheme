@@ -1,0 +1,63 @@
+/* Aurora IB settings — "listing desk": session gauge, stamped terms slip, priority queue, flashing client quote board. */
+
+@keyframes st-rise {
+  from { opacity: 0; transform: translateY(14px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+.st-rise { animation: st-rise 560ms cubic-bezier(0.2, 0.9, 0.3, 1.15) both; }
+
+@keyframes st-pop {
+  0% { opacity: 0; transform: scale(0.6); }
+  70% { opacity: 1; transform: scale(1.08); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.st-pop { animation: st-pop 420ms cubic-bezier(0.3, 1.4, 0.5, 1) both; }
+
+@keyframes st-segment {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+.st-segment { transform-origin: left; animation: st-segment 600ms cubic-bezier(0.2, 0.9, 0.3, 1) both; }
+
+@keyframes st-sweep {
+  0% { transform: translateX(-140%) skewX(-18deg); }
+  55%, 100% { transform: translateX(420%) skewX(-18deg); }
+}
+.st-sweep { animation: st-sweep 2.4s ease-in-out infinite; }
+
+@keyframes st-stamp {
+  0% { transform: scale(2) rotate(-14deg); opacity: 0; }
+  60% { transform: scale(0.94) rotate(-6deg); opacity: 1; }
+  100% { transform: scale(1) rotate(-6deg); opacity: 1; }
+}
+.st-stamp { animation: st-stamp 560ms 300ms cubic-bezier(0.3, 1.4, 0.5, 1) both; }
+
+@keyframes st-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.15; }
+}
+.st-blink { animation: st-blink 1s steps(1) infinite; }
+
+@keyframes st-halo {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+.st-halo { animation: st-halo 1.6s ease-out infinite; }
+
+/* Re-mounted on every cursor step, so the active quote tile flashes like a price update. */
+@keyframes st-flash {
+  0% { opacity: 0.9; }
+  100% { opacity: 0; }
+}
+.st-flash { animation: st-flash 900ms ease-out both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .st-rise,
+  .st-pop,
+  .st-segment,
+  .st-sweep,
+  .st-stamp,
+  .st-blink,
+  .st-halo,
+  .st-flash { animation: none; }
+}

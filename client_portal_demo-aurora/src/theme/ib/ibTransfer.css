@@ -1,0 +1,53 @@
+/* Aurora IB transfer — "order entry + settlement slip": buying-power meter, step tape, vertical settlement route. */
+
+@keyframes itx-flow {
+  0% { top: 0%; opacity: 0; transform: translate(-50%, -50%) scale(0.6); }
+  15% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  85% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  100% { top: 100%; opacity: 0; transform: translate(-50%, -50%) scale(0.6); }
+}
+.itx-flow { animation: itx-flow 1.8s cubic-bezier(0.45, 0, 0.3, 1) infinite; }
+
+@keyframes itx-stripes {
+  from { background-position: 0 0; }
+  to { background-position: 28px 0; }
+}
+.itx-stripes {
+  background-image: repeating-linear-gradient(-45deg, rgb(255 255 255 / 0.3) 0 7px, transparent 7px 14px);
+  background-size: 28px 100%;
+  animation: itx-stripes 0.9s linear infinite;
+}
+
+@keyframes itx-sweep {
+  0% { transform: translateX(-140%) skewX(-18deg); }
+  55%, 100% { transform: translateX(420%) skewX(-18deg); }
+}
+.itx-sweep { animation: itx-sweep 2.6s ease-in-out infinite; }
+
+@keyframes itx-halo {
+  0% { transform: scale(1); opacity: 0.55; }
+  100% { transform: scale(1.7); opacity: 0; }
+}
+.itx-halo { animation: itx-halo 1.6s ease-out infinite; }
+
+@keyframes itx-stamp {
+  0% { transform: scale(2.1) rotate(-12deg); opacity: 0; }
+  60% { transform: scale(0.94) rotate(-6deg); opacity: 1; }
+  100% { transform: scale(1) rotate(-6deg); opacity: 1; }
+}
+.itx-stamp { animation: itx-stamp 520ms cubic-bezier(0.3, 1.4, 0.5, 1) both; }
+
+@keyframes itx-caret {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.15; }
+}
+.itx-caret { animation: itx-caret 1s steps(1) infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .itx-flow,
+  .itx-stripes,
+  .itx-sweep,
+  .itx-halo,
+  .itx-stamp,
+  .itx-caret { animation: none; }
+}

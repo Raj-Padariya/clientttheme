@@ -1,0 +1,72 @@
+/* Settings "Account Terminal" motion: the status tape scrolls, the command caret blinks, a scan line sweeps the trader ID, function-key LEDs pulse. */
+
+.st-tape {
+  animation: st-tape 22s linear infinite;
+}
+
+@keyframes st-tape {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.st-caret {
+  animation: st-caret 1s steps(1) infinite;
+}
+
+@keyframes st-caret {
+  50% {
+    opacity: 0;
+  }
+}
+
+.st-scan {
+  animation: st-scan 3.2s ease-in-out infinite;
+}
+
+@keyframes st-scan {
+  0% {
+    top: 0%;
+    opacity: 0;
+  }
+  10%,
+  90% {
+    opacity: 1;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+
+.st-led {
+  animation: st-led 1.4s ease-in-out infinite;
+}
+
+@keyframes st-led {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 color-mix(in srgb, currentColor 60%, transparent);
+  }
+  50% {
+    opacity: 0.45;
+    box-shadow: 0 0 0 4px transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .st-tape,
+  .st-caret,
+  .st-scan,
+  .st-led {
+    animation: none;
+  }
+
+  .st-scan {
+    display: none;
+  }
+}

@@ -1,0 +1,98 @@
+/* Manager-desk motion for the PAMM manager dashboard: the capital-pool network turns, trade rows flash in, pending payout stripes run. */
+
+.desk-spin {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: desk-spin var(--spin, 40s) linear infinite;
+}
+
+.desk-spin-reverse {
+  animation-direction: reverse;
+}
+
+@keyframes desk-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* A fresh trade row lights up sage, then settles. */
+.desk-flash {
+  animation: desk-flash 1.6s ease-out var(--flash-delay, 0s);
+}
+
+@keyframes desk-flash {
+  0%,
+  20% {
+    background-color: color-mix(in oklab, var(--hero-buy) 28%, transparent);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+/* Pending payout column: hazard stripes keep running. */
+.desk-stripes {
+  background-image: repeating-linear-gradient(-45deg, rgb(255 255 255 / 0.24) 0 6px, transparent 6px 12px);
+  background-size: 17px 17px;
+  animation: desk-stripes 0.8s linear infinite;
+}
+
+@keyframes desk-stripes {
+  to {
+    background-position: 17px 0;
+  }
+}
+
+/* The active period key slides under the chosen period. */
+.desk-slide {
+  transition: transform 0.45s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+}
+
+/* Order-book depth sides breathe as liquidity comes and goes. */
+.desk-breathe {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation: desk-breathe 2.4s ease-in-out var(--breathe-delay, 0s) infinite alternate;
+}
+
+@keyframes desk-breathe {
+  from {
+    transform: scaleY(0.78);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+/* A scan line runs down the blotter rows. */
+.desk-scan-y {
+  animation: desk-scan-y 3.2s ease-in-out infinite;
+}
+
+@keyframes desk-scan-y {
+  0%,
+  100% {
+    top: 0%;
+  }
+  50% {
+    top: calc(100% - 2px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .desk-scan-y {
+    display: none;
+  }
+
+  .desk-spin,
+  .desk-flash,
+  .desk-stripes,
+  .desk-breathe {
+    animation: none;
+  }
+
+  .desk-slide {
+    transition: none;
+  }
+}

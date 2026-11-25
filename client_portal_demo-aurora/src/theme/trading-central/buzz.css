@@ -1,0 +1,58 @@
+/* Market Buzz "Limit Order" motion: fill bars sweep in, the trading-halt ribbon's hazard stripes march, ghost depth rows breathe. */
+
+.mb-fill {
+  transform-origin: left center;
+  animation: mb-fill-in 1.1s cubic-bezier(0.3, 1.1, 0.4, 1) both;
+  animation-delay: var(--mb-delay, 0ms);
+}
+
+@keyframes mb-fill-in {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.mb-halt {
+  background-image: repeating-linear-gradient(-45deg, var(--aurora-cta-from) 0 12px, transparent 12px 24px);
+  /* 24px stripe period at 45° repeats every 24·√2 px on both axes, so this tile seams cleanly. */
+  background-size: 33.94px 33.94px;
+  animation: mb-halt-march 1.2s linear infinite;
+}
+
+@keyframes mb-halt-march {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 33.94px 0;
+  }
+}
+
+.mb-ghost {
+  transform-origin: left center;
+  animation: mb-ghost 2.6s ease-in-out infinite;
+  animation-delay: var(--mb-delay, 0s);
+}
+
+@keyframes mb-ghost {
+  0%,
+  100% {
+    transform: scaleX(1);
+    opacity: 0.55;
+  }
+  50% {
+    transform: scaleX(0.6);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mb-fill,
+  .mb-halt,
+  .mb-ghost {
+    animation: none;
+  }
+}

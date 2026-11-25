@@ -1,0 +1,65 @@
+/* Aurora IB referral links — "routing terminal": typed default code, step-line conversion route, links watchlist. */
+
+@keyframes rl-rise {
+  from { opacity: 0; transform: translateY(14px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+.rl-rise { animation: rl-rise 560ms cubic-bezier(0.2, 0.9, 0.3, 1.15) both; }
+
+/* The default code types out, holds, then clears — width in ch of a monospace face, one step per character. */
+@keyframes rl-type {
+  0% { width: 0; }
+  50%, 88% { width: calc(var(--rl-chars) * 1ch); }
+  100% { width: 0; }
+}
+.rl-type {
+  width: calc(var(--rl-chars) * 1ch);
+  animation: rl-type 4.2s steps(var(--rl-chars), end) infinite;
+}
+
+@keyframes rl-caret {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.1; }
+}
+.rl-caret { animation: rl-caret 1s steps(1) infinite; }
+
+@keyframes rl-flow {
+  to { stroke-dashoffset: -48; }
+}
+.rl-flow { animation: rl-flow 1.2s linear infinite; }
+
+@keyframes rl-halo {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+.rl-halo { animation: rl-halo 1.6s ease-out infinite; }
+
+@keyframes rl-pulse {
+  0% { transform: scale(1); opacity: 0.7; }
+  100% { transform: scale(1.3); opacity: 0; }
+}
+.rl-pulse { animation: rl-pulse 1.8s ease-out infinite; }
+
+@keyframes rl-sweep {
+  0% { transform: translateX(-140%) skewX(-18deg); }
+  55%, 100% { transform: translateX(420%) skewX(-18deg); }
+}
+.rl-sweep { animation: rl-sweep 2.6s ease-in-out infinite; }
+
+@keyframes rl-bead {
+  0% { left: 0%; opacity: 0; }
+  20%, 80% { opacity: 1; }
+  100% { left: 100%; opacity: 0; }
+}
+.rl-bead { animation: rl-bead 1.6s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .rl-rise,
+  .rl-type,
+  .rl-caret,
+  .rl-flow,
+  .rl-halo,
+  .rl-pulse,
+  .rl-sweep,
+  .rl-bead { animation: none; }
+}

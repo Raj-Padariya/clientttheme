@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="45%" r="70%">
+      <stop offset="0" stop-color="#2e2a22"/>
+      <stop offset="0.6" stop-color="#17171a"/>
+      <stop offset="1" stop-color="#0b0b0c"/>
+    </radialGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#34343a"/>
+      <stop offset="0.6" stop-color="#18181b"/>
+      <stop offset="1" stop-color="#0b0b0c"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f1d9a4"/>
+      <stop offset="0.5" stop-color="#c9a45c"/>
+      <stop offset="1" stop-color="#7a5a20"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="480" fill="url(#bg)"/>
+  <ellipse cx="320" cy="390" rx="210" ry="20" fill="#000" opacity="0.5"/>
+  <g transform="rotate(-6 320 240)">
+    <rect x="150" y="130" width="340" height="214" rx="20" fill="url(#card)" stroke="url(#gold)" stroke-width="2"/>
+    <rect x="252" y="130" width="22" height="214" fill="url(#gold)"/>
+    <rect x="150" y="214" width="340" height="22" fill="url(#gold)"/>
+    <path d="M263 225 C230 180 200 190 214 214 C222 228 248 228 263 225 Z" fill="none" stroke="url(#gold)" stroke-width="6" stroke-linejoin="round"/>
+    <path d="M263 225 C296 180 326 190 312 214 C304 228 278 228 263 225 Z" fill="none" stroke="url(#gold)" stroke-width="6" stroke-linejoin="round"/>
+    <circle cx="263" cy="225" r="9" fill="url(#gold)"/>
+    <text x="470" y="180" text-anchor="end" font-family="Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="3" fill="#a1a1aa">GIFT CARD</text>
+    <text x="470" y="310" text-anchor="end" font-family="Arial, sans-serif" font-size="44" font-weight="300" fill="url(#gold)">$100</text>
+    <path d="M300 286 q40 22 80 0" fill="none" stroke="#c9a45c" stroke-width="3" stroke-linecap="round"/>
+    <path d="M372 280 l10 6 l-10 6" fill="none" stroke="#c9a45c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <circle cx="120" cy="110" r="2" fill="#e8cf9c"/>
+  <circle cx="540" cy="110" r="2.4" fill="#e8cf9c" opacity="0.8"/>
+  <circle cx="560" cy="330" r="1.6" fill="#e8cf9c" opacity="0.6"/>
+</svg>

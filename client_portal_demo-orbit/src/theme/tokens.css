@@ -1,0 +1,353 @@
+@import "./orbit.css";
+
+/*
+ * Design tokens — "Orbit": deep-space navy surfaces, an electric-cyan primary and a violet second accent.
+ * Components never use raw colours — only these variables, mapped to Tailwind utilities in app/globals.css.
+ * Variable names are the shared theme contract (theme-guide.md §5); only the values are Orbit's.
+ */
+
+:root {
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 14px;
+  --r-xl: 22px;
+
+  --sidebar-width: 264px;
+  --topbar-height: 84px;
+  /* Fills the area beside the sidebar on normal desktops; only caps ultra-wide screens. */
+  --content-max: 1920px;
+
+  /* Wallet card: a deep-space card in both themes, lit by the cyan core. `--wallet-gold` keeps its contract name. */
+  --wallet-gold: #c084fc;
+  --wallet-card-bg: linear-gradient(150deg, #3b1d5e, #1e1030 58%, #0c0a12);
+
+  /* Orbit-only: the violet half of the cyan/violet pairing, and the 3D depth used by tilt cards. */
+  --orbit-violet: #a78bfa;
+  --orbit-perspective: 1200px;
+}
+
+/*
+ * Theme customizer fonts. next/font gives every family its own --font-opt-* variable (theme/meta.ts);
+ * `data-font` on <html> picks which one feeds --font-brand / --font-brand-display. Declared on body too,
+ * so the var() resolves on whichever element carries the next/font classes.
+ */
+:root,
+body {
+  --font-brand: var(--font-opt-jakarta);
+  --font-brand-display: var(--font-opt-jakarta);
+}
+
+[data-font="inter"],
+[data-font="inter"] body {
+  --font-brand: var(--font-opt-inter);
+  --font-brand-display: var(--font-opt-inter);
+}
+
+[data-font="poppins"],
+[data-font="poppins"] body {
+  --font-brand: var(--font-opt-poppins);
+  --font-brand-display: var(--font-opt-poppins);
+}
+
+[data-font="manrope"],
+[data-font="manrope"] body {
+  --font-brand: var(--font-opt-manrope);
+  --font-brand-display: var(--font-opt-manrope);
+}
+
+[data-font="montserrat"],
+[data-font="montserrat"] body {
+  --font-brand: var(--font-opt-montserrat);
+  --font-brand-display: var(--font-opt-montserrat);
+}
+
+[data-font="jakarta"],
+[data-font="jakarta"] body {
+  --font-brand: var(--font-opt-jakarta);
+  --font-brand-display: var(--font-opt-jakarta);
+}
+
+/*
+ * Gradient "ink" for big headline figures (white → lavender → primary on dark). Light mode swaps the pale stops
+ * for deep shades of the primary, otherwise the top of each glyph vanishes into the light surface.
+ */
+[data-theme="light"] {
+  --orbit-ink-top: color-mix(in oklab, var(--brand-primary) 55%, #1e1036);
+  --orbit-ink-mid: color-mix(in oklab, var(--brand-primary) 80%, #1e1036);
+}
+
+/*
+ * Dashboard hero in deep space: a navy void with a cyan nebula top-left and a violet one bottom-right.
+ * Cyan for buyers / up, violet for sellers, rose for down. The wallet card keeps this palette in every theme.
+ */
+:root,
+[data-theme="light"] .wallet-card {
+  --hero-bg: radial-gradient(620px 420px at -6% 0, rgb(94 231 255 / 0.22), rgb(94 231 255 / 0.05) 45%, transparent 70%),
+    radial-gradient(560px 380px at 106% 100%, rgb(167 139 250 / 0.2), transparent 70%), #040817;
+  --hero-panel: #070d22;
+  --hero-tile: #0e1834;
+  --hero-line: rgb(148 178 255 / 0.08);
+  --hero-line-hi: rgb(148 178 255 / 0.16);
+  --hero-ring: rgb(94 231 255 / 0.05);
+  --hero-dots: rgb(148 178 255 / 0.12);
+  --hero-silk: #c4f6ff;
+  --hero-txt: #eef3ff;
+  --hero-mute: #8f9cc4;
+  --hero-dim: #4d5a82;
+  --hero-btn-bg: #5ee7ff;
+  --hero-btn-hover: #8ff0ff;
+  --hero-btn-fg: #04101f;
+  --hero-buy: #5ee7ff;
+  --hero-sell: #a78bfa;
+  --hero-avatar-sell: #7c3aed;
+  --hero-up: #5ee7ff;
+  --hero-down: #ff7a8a;
+  --hero-live: #ff4d6d;
+}
+
+/*
+ * Light hero, "daylight orbit": white-to-ice paper with faint cyan and violet glows, navy text and a navy
+ * button with cyan lettering. Accents are deepened so text stays ≥ 4.5:1.
+ */
+[data-theme="light"] {
+  --hero-bg: radial-gradient(620px 420px at 100% 0, rgb(14 165 233 / 0.16), rgb(14 165 233 / 0.04) 50%, transparent 72%),
+    radial-gradient(520px 360px at 0 100%, rgb(124 58 237 / 0.1), transparent 70%), linear-gradient(160deg, #ffffff 0%, #f4f7fd 55%, #ebf0fa 100%);
+  --hero-panel: #ffffff;
+  --hero-tile: #f2f5fc;
+  --hero-line: rgb(10 18 48 / 0.08);
+  --hero-line-hi: rgb(10 18 48 / 0.14);
+  --hero-ring: rgb(255 255 255 / 0.9);
+  --hero-dots: rgb(10 18 48 / 0.12);
+  --hero-silk: #0369a1;
+  --hero-txt: #0a1230;
+  --hero-mute: #56618a;
+  --hero-dim: #a3adc9;
+  --hero-btn-bg: #0a1230;
+  --hero-btn-hover: #050a1c;
+  --hero-btn-fg: #7ee8ff;
+  --hero-buy: #0369a1;
+  --hero-sell: #6d28d9;
+  --hero-avatar-sell: #6d28d9;
+  --hero-up: #0369a1;
+  --hero-down: #b4233a;
+  --hero-live: #dc2647;
+
+  /* Sidebar rows (`nav-active` / `nav-hover` in globals.css fall back to the dark look when these are unset). */
+  --nav-active-bg: linear-gradient(135deg, #1b2b63 0%, #0a1230 60%, #050a1c 100%);
+  --nav-active-shadow: inset 0 0 0 1px rgb(14 165 233 / 0.35), inset 0 1px 0 rgb(255 255 255 / 0.08), 0 10px 24px -12px rgb(10 18 48 / 0.55);
+  --nav-hover-bg: #eef2fb;
+  --nav-hover-shadow: inset 0 0 0 1px #dde3f2;
+
+  /* Navy half of the cyan pairing in small illustrations; unset in dark mode, where they fall back to cyan. */
+  --chart-ink: #33416a;
+
+  /* Faded part of the `glow-border` hairline; white would vanish on light surfaces. */
+  --glow-rest: rgb(10 18 48 / 0.1);
+
+  --orbit-violet: #6d28d9;
+}
+
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+
+  /* Deep cyan primary (≥ 5:1 on white with white text), violet accent, navy accent cards. */
+  --brand-primary: #0369a1;
+  --brand-primary-hover: #075985;
+  --brand-on-primary: #ffffff;
+  --brand-soft: #e3f3fb;
+  --brand-accent: #6d28d9;
+  /* Lighting stops for accent illustrations (highlight → shadow). */
+  --brand-gleam: #7dd3fc;
+  --brand-deep: #0c4a6e;
+  /* Accent fill follows the active palette (deep shade → primary) so buttons never pick up a stray cyan stop. */
+  --brand-gradient: linear-gradient(135deg, color-mix(in oklab, var(--brand-primary) 70%, #1e1036) 0%, var(--brand-primary) 100%);
+
+  --bg-app: #eef2fb;
+  --bg-surface: #ffffff;
+  --bg-surface-2: #f2f5fc;
+  --bg-elevated: #ffffff;
+  --bg-hover: #e7ecf8;
+  --bg-overlay: rgb(5 10 26 / 0.5);
+
+  --text-primary: #0a1230;
+  --text-secondary: #33416a;
+  --text-muted: #56618a;
+  --text-inverse: #ffffff;
+
+  --border: #dde3f2;
+  --border-strong: #c9d2ea;
+  --focus-ring: #0369a1;
+
+  --success: #157a4b;
+  --success-soft: #e2f4ea;
+  --warning: #9a5b06;
+  --warning-soft: #fbefdb;
+  --danger: #b4233a;
+  --danger-soft: #fbe5e9;
+  --info: #1d4ed8;
+  --info-soft: #e5ecfd;
+
+  --elev-1: 0 1px 2px rgb(10 18 48 / 0.05), 0 1px 3px rgb(10 18 48 / 0.06);
+  --elev-2: 0 12px 32px rgb(10 18 48 / 0.1);
+  --elev-3: 0 30px 70px rgb(10 18 48 / 0.2);
+
+  /* Light sidebar: white with navy text; the active row is a navy pill (see `nav-active` in globals.css) with a cyan icon. */
+  --sidebar-bg: #ffffff;
+  --sidebar-border: #e3e8f5;
+  --sidebar-fg: #0a1230;
+  --sidebar-muted: #56618a;
+  --sidebar-hover: #eef2fb;
+  --sidebar-active-bg: #0369a1;
+  --sidebar-active-fg: #ffffff;
+
+  /* Card surface (the `glass` utility): near-solid white, hairline border, soft navy shadow. */
+  --glass-bg: rgb(255 255 255 / 0.92);
+  --glass-bg-strong: #ffffff;
+  --glass-border: #dde3f2;
+  --glass-highlight: inset 0 1px 0 rgb(255 255 255 / 0.95);
+  --glass-shadow: 0 1px 2px rgb(10 18 48 / 0.04), 0 10px 28px -14px rgb(10 18 48 / 0.16);
+  --glass-fill: #ffffff;
+  --glass-fill-strong: #ffffff;
+  --glass-edge: linear-gradient(135deg, rgb(255 255 255 / 0.95) 0%, rgb(14 165 233 / 0.25) 45%, rgb(124 58 237 / 0.35) 100%);
+  --glass-sheen: rgb(255 255 255 / 0.55);
+  --glass-grid: rgb(10 18 48 / 0.05);
+  --glass-blob-1: rgb(14 165 233 / 0.22);
+  --glass-blob-2: rgb(124 58 237 / 0.16);
+  --glass-blob-3: rgb(125 211 252 / 0.24);
+  --glass-blob-4: rgb(76 29 149 / 0.12);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  /* FinFlow-style violet on a purple-tinted near-black (user's dashboard reference, 2026-10-30). */
+  --brand-primary: #c084fc;
+  --brand-primary-hover: #d4a5ff;
+  --brand-on-primary: #14081f;
+  --brand-soft: rgb(192 132 252 / 0.14);
+  --brand-accent: #f0a35e;
+  --brand-gleam: #ead5ff;
+  --brand-deep: #6d28d9;
+  --brand-gradient: linear-gradient(135deg, #d9a8ff 0%, #b56cf5 45%, #8b3fe0 100%);
+
+  --bg-app: #0c0a12;
+  --bg-surface: #15111d;
+  --bg-surface-2: #1c1726;
+  --bg-elevated: #231d30;
+  --bg-hover: #221b2e;
+  --bg-overlay: rgb(6 3 12 / 0.72);
+
+  --text-primary: #f4effc;
+  --text-secondary: #bdb2cf;
+  --text-muted: #8f86a5;
+  --text-inverse: #0c0a12;
+
+  --border: #2a2338;
+  --border-strong: #3a304f;
+  --focus-ring: #c084fc;
+
+  --success: #4ade80;
+  --success-soft: rgb(74 222 128 / 0.12);
+  --warning: #fbbf5a;
+  --warning-soft: rgb(251 191 90 / 0.12);
+  --danger: #ff7a7a;
+  --danger-soft: rgb(255 122 122 / 0.12);
+  --info: #a5b4fc;
+  --info-soft: rgb(165 180 252 / 0.12);
+
+  --elev-1: 0 1px 2px rgb(0 0 0 / 0.5);
+  --elev-2: 0 12px 32px rgb(4 2 10 / 0.6);
+  --elev-3: 0 30px 70px rgb(4 2 10 / 0.75);
+
+  --sidebar-bg: #0a0810;
+  --sidebar-border: #221c2e;
+  --sidebar-fg: #f4effc;
+  --sidebar-muted: #8f86a5;
+  --sidebar-hover: #1a1524;
+  --sidebar-active-bg: #c084fc;
+  --sidebar-active-fg: #14081f;
+
+  /* Translucent plum so the backdrop glow behind cards reads through as depth. */
+  --glass-bg: rgb(24 19 34 / 0.8);
+  --glass-bg-strong: rgb(30 24 42 / 0.92);
+  --glass-border: #2a2338;
+  --glass-highlight: inset 0 1px 0 rgb(230 210 255 / 0.07);
+  --glass-shadow: 0 1px 2px rgb(0 0 0 / 0.45), 0 14px 36px -16px rgb(4 2 10 / 0.85);
+  --glass-fill: rgb(24 19 34 / 0.8);
+  --glass-fill-strong: rgb(30 24 42 / 0.92);
+  --glass-edge: linear-gradient(135deg, rgb(192 132 252 / 0.45) 0%, rgb(230 210 255 / 0.05) 42%, rgb(240 163 94 / 0.3) 100%);
+  --glass-sheen: rgb(230 210 255 / 0.06);
+  --glass-grid: rgb(230 210 255 / 0.04);
+  --glass-blob-1: rgb(192 132 252 / 0.18);
+  --glass-blob-2: rgb(139 63 224 / 0.16);
+  --glass-blob-3: rgb(217 168 255 / 0.08);
+  --glass-blob-4: rgb(240 163 94 / 0.08);
+}
+
+/*
+ * Theme customizer palette. With `data-palette` on <html>, every brand token is derived from one picked
+ * colour (`--brand-pick`, set inline by the customizer). Lightness is fixed per mode — deep in light mode
+ * (≥ 4.5:1 on white with white text), bright in dark mode (dark text on fills) — so any hue stays readable.
+ * Without `data-palette` the gold values above apply untouched. Wrapped in @supports because a custom
+ * property holding unsupported relative colour would go invalid instead of falling back to gold.
+ */
+@supports (color: oklch(from red l c h)) {
+  [data-palette] {
+    --brand-pick-safe: var(--brand-pick, #5ee7ff);
+    --wallet-gold: oklch(from var(--brand-pick-safe) 0.8 min(c, 0.12) h);
+    --hero-buy: var(--wallet-gold);
+    --hero-up: var(--wallet-gold);
+  }
+
+  /* The wallet card stays dark in light mode, so it keeps the bright variant. */
+  [data-theme="light"][data-palette] .wallet-card {
+    --hero-buy: var(--wallet-gold);
+    --hero-up: var(--wallet-gold);
+  }
+
+  [data-theme="light"][data-palette] {
+    --brand-primary: oklch(from var(--brand-pick-safe) 0.45 min(c, 0.16) h);
+    --brand-primary-hover: oklch(from var(--brand-pick-safe) 0.38 min(c, 0.15) h);
+    --brand-on-primary: #ffffff;
+    --brand-soft: oklch(from var(--brand-pick-safe) 0.95 min(c, 0.03) h);
+    --brand-accent: oklch(from var(--brand-pick-safe) 0.52 min(c, 0.14) h);
+    --brand-gleam: oklch(from var(--brand-pick-safe) 0.86 min(c, 0.1) h);
+    --brand-deep: oklch(from var(--brand-pick-safe) 0.38 min(c, 0.1) h);
+    --focus-ring: var(--brand-accent);
+    --sidebar-active-bg: oklch(from var(--brand-pick-safe) 0.72 min(c, 0.12) h);
+
+    --hero-bg: radial-gradient(640px 420px at 100% 0, color-mix(in oklab, var(--wallet-gold) 20%, transparent), color-mix(in oklab, var(--wallet-gold) 5%, transparent) 50%, transparent 72%),
+      linear-gradient(160deg, #ffffff 0%, #f6f6f7 55%, #efeff1 100%);
+    --hero-silk: oklch(from var(--brand-pick-safe) 0.64 min(c, 0.12) h);
+    --hero-btn-fg: oklch(from var(--brand-pick-safe) 0.87 min(c, 0.09) h);
+    --hero-buy: var(--brand-accent);
+    --hero-up: var(--brand-accent);
+    --nav-active-shadow: inset 0 0 0 1px color-mix(in oklab, var(--sidebar-active-bg) 35%, transparent), inset 0 1px 0 rgb(255 255 255 / 0.08), 0 10px 24px -12px rgb(24 24 27 / 0.55);
+
+    --glass-edge: linear-gradient(135deg, rgb(255 255 255 / 0.95) 0%, rgb(255 255 255 / 0.25) 40%, color-mix(in oklab, var(--wallet-gold) 45%, transparent) 100%);
+    --glass-blob-1: color-mix(in oklab, var(--wallet-gold) 30%, transparent);
+    --glass-blob-2: color-mix(in oklab, var(--brand-accent) 22%, transparent);
+    --glass-blob-3: color-mix(in oklab, var(--brand-gleam) 24%, transparent);
+    --glass-blob-4: color-mix(in oklab, var(--brand-primary) 16%, transparent);
+  }
+
+  [data-theme="dark"][data-palette] {
+    --brand-primary: oklch(from var(--brand-pick-safe) 0.8 min(c, 0.12) h);
+    --brand-primary-hover: oklch(from var(--brand-pick-safe) 0.87 min(c, 0.09) h);
+    --brand-on-primary: #0b0b0b;
+    --brand-soft: oklch(from var(--brand-pick-safe) 0.8 min(c, 0.12) h / 0.12);
+    --brand-accent: oklch(from var(--brand-pick-safe) 0.87 min(c, 0.09) h);
+    --brand-gleam: oklch(from var(--brand-pick-safe) 0.91 min(c, 0.07) h);
+    --brand-deep: oklch(from var(--brand-pick-safe) 0.42 min(c, 0.1) h);
+    --brand-gradient: linear-gradient(135deg, var(--brand-gleam) 0%, var(--brand-primary) 50%, oklch(from var(--brand-pick-safe) 0.68 min(c, 0.11) h) 100%);
+    --focus-ring: var(--brand-primary);
+    --sidebar-active-bg: var(--brand-primary);
+
+    --glass-edge: linear-gradient(135deg, rgb(255 255 255 / 0.2) 0%, rgb(255 255 255 / 0.04) 42%, color-mix(in oklab, var(--brand-primary) 35%, transparent) 100%);
+    --glass-blob-1: color-mix(in oklab, var(--brand-primary) 18%, transparent);
+    --glass-blob-2: color-mix(in oklab, var(--brand-deep) 14%, transparent);
+    --glass-blob-3: color-mix(in oklab, var(--brand-gleam) 12%, transparent);
+    --glass-blob-4: color-mix(in oklab, var(--brand-deep) 12%, transparent);
+  }
+}

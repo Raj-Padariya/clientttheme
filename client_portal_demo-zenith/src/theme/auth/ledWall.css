@@ -1,0 +1,158 @@
+/* Zenith auth: "LED Exchange Wall". The board is an always-dark LED panel in both colour modes. */
+
+.zen-auth-board {
+  --led-bg: #0b0b0d;
+  --led-amber: #ffb547;
+  --led-green: #4ade80;
+  --led-red: var(--zenith-red, #ff4a3d);
+  --led-dim: rgb(255 255 255 / 0.6);
+  background-color: var(--led-bg);
+  color: var(--led-amber);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.06);
+}
+
+/* Unlit LED dots across the whole board. */
+.zen-auth-grid {
+  background-image: radial-gradient(circle, rgb(255 255 255 / 0.07) 1px, transparent 1.4px);
+  background-size: 6px 6px;
+}
+
+/* Punches large text into dots so it reads as a dot-matrix display. */
+.zen-auth-led {
+  position: relative;
+}
+.zen-auth-led::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle, transparent 1px, var(--led-bg) 1.45px);
+  background-size: 3px 3px;
+}
+
+@keyframes zen-auth-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.zen-auth-scroll {
+  animation: zen-auth-scroll 22s linear infinite;
+}
+.zen-auth-scroll-slow {
+  animation: zen-auth-scroll 34s linear infinite reverse;
+}
+
+/* A digit that just changed flips in like a split-flap cell. */
+@keyframes zen-auth-flip {
+  from {
+    transform: perspective(300px) rotateX(-90deg);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+.zen-auth-flip {
+  display: inline-block;
+  transform-origin: 50% 0;
+  animation: zen-auth-flip 0.45s cubic-bezier(0.2, 0.8, 0.3, 1.2) both;
+}
+
+/* Refresh scan bar rolling down the board. */
+@keyframes zen-auth-scan {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+.zen-auth-scan {
+  background: linear-gradient(180deg, transparent, rgb(255 181 71 / 0.12) 48%, rgb(255 181 71 / 0.22) 50%, transparent 52%);
+  animation: zen-auth-scan 3.2s linear infinite;
+}
+
+@keyframes zen-auth-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0.15;
+  }
+}
+.zen-auth-blink {
+  animation: zen-auth-blink 1s steps(1) infinite;
+}
+
+/* The next empty capsule on the signup track breathes to show where you are. */
+@keyframes zen-auth-breathe {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scaleY(0.7);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+.zen-auth-breathe {
+  animation: zen-auth-breathe 1.4s ease-in-out infinite;
+}
+
+@keyframes zen-auth-in {
+  from {
+    transform: translateX(24px);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+.zen-auth-in {
+  animation: zen-auth-in 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.zen-auth-shine {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.zen-auth-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent 35%, rgb(255 255 255 / 0.32) 50%, transparent 65%);
+  transform: translateX(-120%);
+  animation: zen-auth-shine 2.6s ease-in-out infinite;
+}
+@keyframes zen-auth-shine {
+  0%,
+  30% {
+    transform: translateX(-120%);
+  }
+  70%,
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zen-auth-scroll,
+  .zen-auth-scroll-slow,
+  .zen-auth-flip,
+  .zen-auth-blink,
+  .zen-auth-breathe,
+  .zen-auth-in,
+  .zen-auth-shine::after {
+    animation: none;
+  }
+  .zen-auth-scan {
+    display: none;
+  }
+}

@@ -1,0 +1,332 @@
+/*
+ * Aurora scratch cards "zen sand garden": raked sand that keeps drifting, stones that bob with ripples spreading
+ * through the sand, a stepping-stone path for the deck, an hourglass for the next card, a raked dish for the lots,
+ * and a cairn of balanced stones for the leaders. Every animation is off under reduced motion.
+ */
+
+.zen-sand {
+  background-color: color-mix(in oklab, var(--hero-buy) 7%, var(--color-surface));
+}
+
+/* Rake grooves drawn twice as wide as their tray, sliding by half so the drift loops. */
+.zen-rake-drift {
+  animation: zen-rake 5s linear infinite;
+}
+
+@keyframes zen-rake {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* A band of light sweeping across the tray, like a rake being pulled through. */
+.zen-sweep {
+  animation: zen-sweep 3.4s ease-in-out infinite;
+}
+
+@keyframes zen-sweep {
+  from {
+    transform: translateX(-120%);
+  }
+  to {
+    transform: translateX(520%);
+  }
+}
+
+.zen-bob {
+  animation: zen-bob 2.6s ease-in-out infinite;
+}
+
+@keyframes zen-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+/* Rings spreading through the sand around a stone. */
+.zen-ripple {
+  animation: zen-ripple 2.4s ease-out infinite;
+}
+
+svg .zen-ripple {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@keyframes zen-ripple {
+  from {
+    opacity: 0.85;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.9);
+  }
+}
+
+/* The stepping-stone path keeps flowing toward the newest cards. */
+.zen-path {
+  animation: zen-path 1.4s linear infinite;
+}
+
+@keyframes zen-path {
+  to {
+    stroke-dashoffset: -16;
+  }
+}
+
+/* Hourglass: the falling stream and the grains dropping onto the pile. */
+.zen-pour {
+  animation: zen-pour 0.45s linear infinite;
+}
+
+@keyframes zen-pour {
+  to {
+    stroke-dashoffset: -10;
+  }
+}
+
+.zen-grain {
+  transform-box: fill-box;
+  animation: zen-grain 0.9s ease-in infinite;
+}
+
+@keyframes zen-grain {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+}
+
+/* Cairn stones drop onto the stack one by one, then keep balancing. */
+.zen-drop {
+  animation: zen-drop 0.8s cubic-bezier(0.3, 1.4, 0.5, 1) backwards;
+}
+
+@keyframes zen-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-70px) rotate(-6deg);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.zen-sway {
+  transform-origin: 50% 100%;
+  animation: zen-sway 4.2s ease-in-out infinite;
+}
+
+@keyframes zen-sway {
+  0%,
+  100% {
+    transform: rotate(-1.8deg);
+  }
+  50% {
+    transform: rotate(1.8deg);
+  }
+}
+
+/* Engraved stone plaque: light glancing across the carving. */
+.zen-glint {
+  position: relative;
+  overflow: hidden;
+}
+
+.zen-glint::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(100deg, transparent 35%, rgb(255 255 255 / 0.2) 50%, transparent 65%);
+  transform: translateX(-100%);
+  animation: zen-glint 3.2s ease-in-out infinite;
+}
+
+@keyframes zen-glint {
+  60%,
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.zen-rise {
+  animation: zen-rise 0.7s cubic-bezier(0.22, 0.9, 0.3, 1) backwards;
+}
+
+@keyframes zen-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Leaves drifting down through the garden, swaying and turning. */
+.zen-leaf {
+  animation: zen-leaf var(--leaf-duration, 9s) linear var(--leaf-delay, 0s) infinite backwards;
+}
+
+@keyframes zen-leaf {
+  0% {
+    top: -8%;
+    opacity: 0;
+    transform: translateX(0) rotate(0deg);
+  }
+  10% {
+    opacity: 0.95;
+  }
+  35% {
+    transform: translateX(var(--leaf-sway, 40px)) rotate(140deg);
+  }
+  65% {
+    transform: translateX(calc(var(--leaf-sway, 40px) * -0.5)) rotate(240deg);
+  }
+  90% {
+    opacity: 0.95;
+  }
+  100% {
+    top: 104%;
+    opacity: 0;
+    transform: translateX(var(--leaf-sway, 40px)) rotate(360deg);
+  }
+}
+
+/* Ensō: a brush circle that paints itself, holds, then fades for the next stroke. */
+.zen-enso {
+  stroke-dasharray: 100;
+  animation: zen-enso 4s cubic-bezier(0.6, 0, 0.3, 1) infinite;
+}
+
+@keyframes zen-enso {
+  0% {
+    stroke-dashoffset: 100;
+    opacity: 1;
+  }
+  50%,
+  80% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+
+/* Shishi-odoshi: the bamboo fills and dips slowly, tips with a clack, a drop falls and splashes into the dish. */
+.zen-bamboo {
+  transform-box: view-box;
+  animation: zen-bamboo 3.6s ease-in infinite;
+}
+
+@keyframes zen-bamboo {
+  0% {
+    transform: rotate(8deg);
+  }
+  70% {
+    transform: rotate(0deg);
+  }
+  76% {
+    transform: rotate(-22deg);
+  }
+  86% {
+    transform: rotate(10deg);
+  }
+  93%,
+  100% {
+    transform: rotate(8deg);
+  }
+}
+
+.zen-drip {
+  animation: zen-drip 3.6s ease-in infinite;
+}
+
+@keyframes zen-drip {
+  0%,
+  75% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  77% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  88% {
+    opacity: 1;
+    transform: translateY(38px);
+  }
+  89%,
+  100% {
+    opacity: 0;
+    transform: translateY(38px);
+  }
+}
+
+.zen-splash {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: zen-splash 3.6s ease-out infinite;
+}
+
+@keyframes zen-splash {
+  0%,
+  88% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  89% {
+    opacity: 1;
+    transform: scale(0.3);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2.4);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zen-leaf,
+  .zen-drip,
+  .zen-splash {
+    display: none;
+  }
+
+  .zen-enso,
+  .zen-bamboo,
+  .zen-rake-drift,
+  .zen-bob,
+  .zen-ripple,
+  .zen-path,
+  .zen-pour,
+  .zen-grain,
+  .zen-drop,
+  .zen-sway,
+  .zen-glint::after,
+  .zen-rise {
+    animation: none;
+  }
+
+  .zen-sweep,
+  .zen-ripple,
+  .zen-grain {
+    display: none;
+  }
+}

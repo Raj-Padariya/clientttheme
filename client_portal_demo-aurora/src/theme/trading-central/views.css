@@ -1,0 +1,91 @@
+/* Technical Views "Chart Workstation" motion: SVG candles print in, a scan line crosses the chart, depth bars breathe, the empty flatline carries a blip. */
+
+.tv-candle {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation: tv-candle-in 0.5s cubic-bezier(0.3, 1.3, 0.5, 1) both;
+  animation-delay: var(--tv-delay, 0ms);
+}
+
+@keyframes tv-candle-in {
+  from {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+  to {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+.tv-scan {
+  animation: tv-scan 4.5s linear infinite;
+}
+
+@keyframes tv-scan {
+  0% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+  8%,
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(var(--tv-scan-distance, 0px));
+    opacity: 0;
+  }
+}
+
+.tv-depth {
+  animation: tv-depth 2.4s ease-in-out infinite;
+  animation-delay: var(--tv-delay, 0s);
+}
+
+.tv-depth-bull {
+  transform-origin: right center;
+}
+
+.tv-depth-bear {
+  transform-origin: left center;
+}
+
+@keyframes tv-depth {
+  0%,
+  100% {
+    transform: scaleX(1);
+  }
+  50% {
+    transform: scaleX(0.8);
+  }
+}
+
+.tv-blip {
+  animation: tv-blip 2.6s ease-in-out infinite alternate;
+}
+
+@keyframes tv-blip {
+  from {
+    left: 0%;
+  }
+  to {
+    left: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tv-candle,
+  .tv-depth,
+  .tv-scan,
+  .tv-blip {
+    animation: none;
+  }
+
+  .tv-scan {
+    display: none;
+  }
+
+  .tv-blip {
+    left: 50%;
+  }
+}
